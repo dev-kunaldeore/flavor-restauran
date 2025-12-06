@@ -381,88 +381,90 @@ const MenuSection = () => {
             </div>
           ) : (
             <>
-              {/* Mobile: List/Compact View */}
-              <div className="md:hidden space-y-4">
+              {/* Mobile: Compact Grid View */}
+              <div className="md:hidden grid grid-cols-2 gap-3 pb-4">
                 {filteredItems.map((item, index) => (
                   <div
                     key={item.id}
-                className="menu-card rounded-xl overflow-hidden group relative cursor-pointer bg-card"
-                style={{ 
-                  animationDelay: `${index * 0.05}s`,
-                }}
+                    className="menu-card rounded-xl overflow-hidden group relative cursor-pointer bg-card border border-border shadow-md active:scale-[0.96] transition-all duration-200"
+                    style={{ 
+                      animationDelay: `${index * 0.03}s`,
+                    }}
                     onClick={() => handleItemClick(item)}
                   >
-                    <div className="flex gap-4 p-4">
-                      {/* Image - Smaller on mobile */}
-                      <div 
-                        className="w-24 h-24 rounded-lg relative overflow-hidden flex-shrink-0"
+                    {/* Image Section - Compact */}
+                    <div 
+                      className="relative aspect-square w-full overflow-hidden"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleImageClick(item.image);
+                      }}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover transition-transform duration-300 group-active:scale-110"
+                      />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+                      
+                      {/* Favorite Button - Small */}
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleImageClick(item.image);
+                          toggleFavorite(item.id);
                         }}
+                        className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-background/90 backdrop-blur-sm flex items-center justify-center transition-all z-10 shadow-sm"
                       >
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                          style={{ opacity: 0.8 }}
+                        <Heart
+                          className={`w-3.5 h-3.5 transition-all ${
+                            isFavorite(item.id)
+                              ? "fill-primary text-primary scale-110"
+                              : "text-muted-foreground"
+                          }`}
                         />
-                        <div 
-                          className="absolute inset-0"
-                          style={{ 
-                            background: "linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.3) 100%)"
-                          }}
-                        />
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            toggleFavorite(item.id);
-                          }}
-                          className="absolute top-1 right-1 w-7 h-7 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center hover:bg-background transition-all"
-                        >
-                          <Heart
-                            className={`w-4 h-4 transition-all ${
-                              isFavorite(item.id)
-                                ? "fill-primary text-primary"
-                                : "text-muted-foreground"
-                            }`}
-                          />
-                        </button>
-                      </div>
+                      </button>
 
-                      {/* Content */}
-                      <div className="flex-1 min-w-0 space-y-2">
-                        <div className="flex items-start justify-between gap-2">
-                          <h3 
-                            className="font-semibold text-base flex-1 text-foreground"
-                          >
-                            {item.name}
-                          </h3>
-                          <span 
-                            className="font-bold text-lg flex-shrink-0 text-primary"
-                          >
-                            ${item.price.toFixed(2)}
-                          </span>
-                        </div>
-                        <p 
-                          className="text-xs line-clamp-2 text-muted-foreground"
-                        >
-                          {item.description}
-                        </p>
-                        {item.dietary && item.dietary.length > 0 && (
-                          <div className="flex flex-wrap gap-1">
-                            {item.dietary.map((diet) => (
-                              <Badge
-                                key={diet}
-                                variant="outline"
-                                className="text-[8px] px-1.5 py-0"
-                              >
-                                {diet}
-                              </Badge>
-                            ))}
-                          </div>
-                        )}
+                      {/* Price Badge - Bottom */}
+                      <div className="absolute bottom-1.5 left-1.5 px-2 py-0.5 rounded-md bg-primary text-primary-foreground font-bold text-sm shadow-md">
+                        ${item.price.toFixed(2)}
                       </div>
+                    </div>
+
+                    {/* Content Section - Compact */}
+                    <div className="p-2.5 space-y-1.5">
+                      {/* Title */}
+                      <h3 className="font-semibold text-sm text-foreground line-clamp-1 group-active:text-primary transition-colors">
+                        {item.name}
+                      </h3>
+                      
+                      {/* Description - Single line */}
+                      <p className="text-[10px] text-muted-foreground line-clamp-1">
+                        {item.description}
+                      </p>
+
+                      {/* Dietary Badges - Compact */}
+                      {item.dietary && item.dietary.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {item.dietary.slice(0, 2).map((diet) => (
+                            <Badge
+                              key={diet}
+                              variant="outline"
+                              className="text-[9px] px-1 py-0 h-4 leading-none"
+                            >
+                              {diet}
+                            </Badge>
+                          ))}
+                          {item.dietary.length > 2 && (
+                            <Badge
+                              variant="outline"
+                              className="text-[9px] px-1 py-0 h-4 leading-none"
+                            >
+                              +{item.dietary.length - 2}
+                            </Badge>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
