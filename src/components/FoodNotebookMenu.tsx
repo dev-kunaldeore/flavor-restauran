@@ -32,7 +32,7 @@ const FoodNotebookMenu = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50">
       <div
         className="relative"
         onMouseEnter={() => setIsHovered(true)}
@@ -40,18 +40,25 @@ const FoodNotebookMenu = () => {
           setIsHovered(false);
         }}
       >
-        {/* Main Notebook Button */}
+        {/* Main Notebook Button - Mobile: Small Circle, Desktop: Notebook Style */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`relative w-16 h-20 bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/40 dark:to-amber-800/30 border-2 border-amber-400 dark:border-amber-600 rounded-lg shadow-2xl transition-all duration-300 ${
-            isOpen || isHovered ? "scale-110 shadow-amber-500/50 rotate-[-2deg]" : "scale-100"
-          }`}
-          style={{
-            transformStyle: "preserve-3d",
-          }}
-        >
-          {/* Notebook Paper Lines */}
-          <div className="absolute inset-0 p-2 flex flex-col gap-0.5 overflow-hidden">
+          className={`relative 
+            /* Mobile: Small Circle */
+            w-12 h-12 rounded-full
+            /* Desktop: Notebook Style */
+            md:w-16 md:h-20 md:rounded-lg
+            bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/40 dark:to-amber-800/30 
+            border-2 border-amber-400 dark:border-amber-600 
+            shadow-2xl transition-all duration-300 
+            ${
+              isOpen || isHovered 
+                ? "scale-110 shadow-amber-500/50 md:rotate-[-2deg]" 
+                : "scale-100"
+            }`}
+          >
+          {/* Notebook Paper Lines - Desktop Only */}
+          <div className="hidden md:block absolute inset-0 p-2 flex flex-col gap-0.5 overflow-hidden">
             {[...Array(10)].map((_, i) => (
               <div
                 key={i}
@@ -64,8 +71,8 @@ const FoodNotebookMenu = () => {
             ))}
           </div>
 
-          {/* Spiral Binding - Left Side */}
-          <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-500 dark:from-amber-700 dark:via-amber-600 dark:to-amber-700 rounded-l-lg shadow-inner">
+          {/* Spiral Binding - Desktop Only */}
+          <div className="hidden md:block absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-500 dark:from-amber-700 dark:via-amber-600 dark:to-amber-700 rounded-l-lg shadow-inner">
             {/* Spiral Holes */}
             <div className="absolute left-0 top-0 bottom-0 w-full flex flex-col justify-center gap-1.5 px-0.5">
               {[...Array(6)].map((_, i) => (
@@ -80,29 +87,29 @@ const FoodNotebookMenu = () => {
           {/* Icon/Content */}
           <div className="absolute inset-0 flex items-center justify-center z-10">
             {isOpen ? (
-              <X className="w-6 h-6 text-amber-800 dark:text-amber-300 transition-transform duration-300 rotate-90" />
+              <X className="w-5 h-5 md:w-6 md:h-6 text-amber-800 dark:text-amber-300 transition-transform duration-300 md:rotate-90" />
             ) : (
-              <div className="flex flex-col items-center gap-1">
-                <BookOpen className="w-5 h-5 text-amber-800 dark:text-amber-300" />
-                <UtensilsCrossed className="w-4 h-4 text-amber-700 dark:text-amber-400" />
+              <div className="flex flex-col items-center gap-0.5 md:gap-1">
+                <BookOpen className="w-4 h-4 md:w-5 md:h-5 text-amber-800 dark:text-amber-300" />
+                <UtensilsCrossed className="w-3 h-3 md:w-4 md:h-4 text-amber-700 dark:text-amber-400" />
               </div>
             )}
           </div>
 
           {/* Hover Glow Effect */}
           {(isOpen || isHovered) && (
-            <div className="absolute -inset-1 bg-amber-400/30 dark:bg-amber-500/20 rounded-lg blur-md animate-pulse" />
+            <div className="absolute -inset-1 bg-amber-400/30 dark:bg-amber-500/20 rounded-full md:rounded-lg blur-md animate-pulse" />
           )}
 
-          {/* Page Flip Shadow Effect */}
+          {/* Page Flip Shadow Effect - Desktop Only */}
           {isOpen && (
-            <div className="absolute -right-1 top-0 bottom-0 w-1 bg-amber-600/20 dark:bg-amber-500/20 rounded-r-lg" />
+            <div className="hidden md:block absolute -right-1 top-0 bottom-0 w-1 bg-amber-600/20 dark:bg-amber-500/20 rounded-r-lg" />
           )}
         </button>
 
         {/* Food Items Menu - Notebook Style */}
         {isOpen && (
-          <div className="absolute bottom-24 right-0 w-80 max-h-[75vh] overflow-y-auto scrollbar-hide bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/95 dark:to-amber-800/90 border-2 border-amber-400 dark:border-amber-600 rounded-lg shadow-2xl p-4 animate-fade-in">
+          <div className="absolute bottom-16 md:bottom-24 right-0 w-[calc(100vw-2rem)] md:w-80 max-w-[90vw] md:max-w-none max-h-[75vh] overflow-y-auto scrollbar-hide bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-900/95 dark:to-amber-800/90 border-2 border-amber-400 dark:border-amber-600 rounded-lg shadow-2xl p-3 md:p-4 animate-fade-in">
             {/* Spiral Binding - Left Side */}
             <div className="absolute left-0 top-0 bottom-0 w-3 bg-gradient-to-b from-amber-500 via-amber-400 to-amber-500 dark:from-amber-700 dark:via-amber-600 dark:to-amber-700 rounded-l-lg">
               <div className="absolute left-0 top-0 bottom-0 w-full flex flex-col justify-start gap-2 px-1 pt-4">
