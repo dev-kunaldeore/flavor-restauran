@@ -291,6 +291,14 @@
     animation: spin-slow 3s linear infinite;
   }
 
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out;
+  }
+
   /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;

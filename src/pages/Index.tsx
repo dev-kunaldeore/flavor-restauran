@@ -8,6 +8,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import SupportSection from "@/components/SupportSection";
 import LocationSection from "@/components/LocationSection";
 import Footer from "@/components/Footer";
+import FoodNotebookMenu from "@/components/FoodNotebookMenu";
 
 const Index = () => {
   return (
@@ -22,6 +23,7 @@ const Index = () => {
       <SupportSection />
       <LocationSection />
       <Footer />
+      <FoodNotebookMenu />
     </main>
   );
 };
